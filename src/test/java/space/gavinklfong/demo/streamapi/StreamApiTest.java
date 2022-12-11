@@ -62,19 +62,15 @@ public class StreamApiTest {
 		
 		log.info("exercise 2 - Obtain a list of order with product category = \"Baby\"");
 		long startTime = System.currentTimeMillis();
-		List<Order> result = orderRepo.findAll()
-				.stream()
-				.filter(o -> 
-					o.getProducts()
-					.stream()
-					.anyMatch(p -> p.getCategory().equalsIgnoreCase("Baby"))
-				)
-				.collect(Collectors.toList());	
+		List<Order> orders = orderRepo.findAll().stream()
+				.filter(order ->
+					order.getProducts().stream().anyMatch(product -> "Baby".equalsIgnoreCase(product.getCategory()))
+				).collect(Collectors.toList());
 		
 		long endTime = System.currentTimeMillis();
 
 		log.info(String.format("exercise 2 - execution time: %1$d ms", (endTime - startTime)));		
-		result.forEach(o -> log.info(o.toString()));
+		orders.forEach(o -> log.info(o.toString()));
 
 	}
 	
