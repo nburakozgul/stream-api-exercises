@@ -84,15 +84,14 @@ public class StreamApiTest {
 		log.info("exercise 3 - Obtain a list of product with category = “Toys” and then apply 10% discount");
 		long startTime = System.currentTimeMillis();
 		
-		List<Product> result = productRepo.findAll()
-				.stream()
-				.filter(p -> p.getCategory().equalsIgnoreCase("Toys"))
-				.map(p -> p.withPrice(p.getPrice() * 0.9))
-				.collect(Collectors.toList());	
-	
+		List<Product> products = productRepo.findAll().stream()
+				.filter(product -> "Toys".equalsIgnoreCase(product.getCategory()))
+				.map(product -> product.withPrice(product.getPrice() * 0.9)) // @With annotation creates new object with that column that annotated
+				.collect(Collectors.toList());
+
 		long endTime = System.currentTimeMillis();
 		log.info(String.format("exercise 3 - execution time: %1$d ms", (endTime - startTime)));		
-		result.forEach(o -> log.info(o.toString()));
+		products.forEach(o -> log.info(o.toString()));
 		
 	}
 	
