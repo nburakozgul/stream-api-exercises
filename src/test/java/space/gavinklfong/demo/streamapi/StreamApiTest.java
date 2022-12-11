@@ -43,15 +43,14 @@ public class StreamApiTest {
 
 		log.info("exercise 1 - Obtain a list of product with category = \"Books\" and price > 100");
 		long startTime = System.currentTimeMillis();
-		List<Product> result = productRepo.findAll()
-		.stream()
-		.filter(p -> p.getCategory().equalsIgnoreCase("Books"))
-		.filter(p -> p.getPrice() > 100)
-		.collect(Collectors.toList());
+		List<Product> products = productRepo.findAll();
+		products = products.stream().filter(product ->
+			"Books".equals(product.getCategory()) && product.getPrice() > 100
+		).collect(Collectors.toList());
 		long endTime = System.currentTimeMillis();
 
-		log.info(String.format("exercise 1 - execution time: %1$d ms", (endTime - startTime)));		
-		result.forEach(p -> log.info(p.toString()));
+		log.info(String.format("exercise 1 - execution time: %1$d ms", (endTime - startTime)));
+		products.forEach(p -> log.info(p.toString()));
 		
 	}
 	
