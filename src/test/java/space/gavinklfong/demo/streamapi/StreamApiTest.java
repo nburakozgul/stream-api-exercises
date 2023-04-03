@@ -102,15 +102,14 @@ public class StreamApiTest {
 	public void exercise4() {
 				
 		log.info("exercise 4 - Obtain a list of products ordered by customer of tier 2 between 01-Feb-2021 and 01-Apr-2021");
-		long startTime = System.currentTimeMillis();		
-		List<Product> result = orderRepo.findAll()
-		.stream()
-		.filter(o -> o.getCustomer().getTier() == 2)
-		.filter(o -> o.getOrderDate().compareTo(LocalDate.of(2021, 2, 1)) >= 0)
-		.filter(o -> o.getOrderDate().compareTo(LocalDate.of(2021, 4, 1)) <= 0)
-		.flatMap(o -> o.getProducts().stream())
-		.distinct()
-		.collect(Collectors.toList());
+		long startTime = System.currentTimeMillis();
+		List<Product> result = orderRepo.findAll().stream()
+				.filter(o -> o.getCustomer().getTier() == 2)
+				.filter(o -> o.getOrderDate().compareTo(LocalDate.of(2021, 2, 1)) >= 0
+						&&
+						o.getOrderDate().compareTo(LocalDate.of(2021, 4, 1)) <= 0)
+				.flatMap(o -> o.getProducts().stream())
+				.collect(Collectors.toList());
 		
 		long endTime = System.currentTimeMillis();
 		log.info(String.format("exercise 4 - execution time: %1$d ms", (endTime - startTime)));		
