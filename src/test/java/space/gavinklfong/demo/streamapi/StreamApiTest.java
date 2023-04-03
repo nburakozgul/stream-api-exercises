@@ -124,20 +124,13 @@ public class StreamApiTest {
 		
 		log.info("exercise 5 - Get the 3 cheapest products of \"Books\" category");
 		long startTime = System.currentTimeMillis();
-//              Optional<Product> result = productRepo.findAll()
-//                              .stream()
-//                              .filter(p -> p.getCategory().equalsIgnoreCase("Books"))
-//                              .sorted(Comparator.comparing(Product::getPrice))
-//                              .findFirst();
-
-		Optional<Product> result = productRepo.findAll()
-				.stream()
-				.filter(p -> p.getCategory().equalsIgnoreCase("Books"))
-				.min(Comparator.comparing(Product::getPrice));
-
+		Optional<Product> products = productRepo.findAll().stream()
+				.filter(product -> product.getCategory().equalsIgnoreCase("Books"))
+				.min(Comparator.comparingDouble(Product::getPrice));
+		
 		long endTime = System.currentTimeMillis();
 		log.info(String.format("exercise 5 - execution time: %1$d ms", (endTime - startTime)));		
-		log.info(result.get().toString());
+		log.info(products.get().toString());
 					
 	}
 	
